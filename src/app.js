@@ -15,8 +15,8 @@ function App({store}) {
         <button onClick={() => store.createItem()}> Добавить</button>
       </div>
       <div className='App__center'>
-        <div className='List'>{store.getState().items.map(item =>
-          <div
+        <ul className='List'>{store.getState().items.map(item =>
+          <li
             key={item.code}
             className={'List__item' + (item.selected ? ' List__item_selected' : '')}
           >
@@ -29,9 +29,9 @@ function App({store}) {
                 </button>
               </div>
             </div>
-          </div>
+          </li>
         )}
-        </div>
+        </ul>
       </div>
     </div>
   );
