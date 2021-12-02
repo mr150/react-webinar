@@ -51,6 +51,7 @@ class Store {
     this.setState({
       items: this.state.items.concat({
         code,
+        selectCount: 0,
         title: 'Новая запись №'+code
       })
     });
@@ -75,6 +76,8 @@ class Store {
       items: this.state.items.map(item => {
         if (item.code === code){
           item.selected = !item.selected;
+
+					if(item.selected) item.selectCount++;
         }
         return item;
       })

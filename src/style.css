@@ -62,5 +62,8 @@ body{
 .Item__actions{
   margin-left: auto;
 }
-.Item__number{
+.Item__meta{
+  padding-left: 10px;
+  margin-left: 10px;
+  border-left: 1px #000 solid;
 }
