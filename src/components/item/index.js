@@ -20,13 +20,11 @@ function Item({item, onSelect, onDelete}){
   return (
     <div className={'Item'  + (item.selected ? ' Item_selected' : '')} onClick={callbacks.onClick}>
       <div className='Item__number'>{item.code}</div>
-      <div className='Item__title'>
-        {item.title}
-        {counter ? ` | Выделялся ${counter} ${plural(counter, 'раз', 'раза', 'раз')}` : null}
-      </div>
+      <div className='Item__title'>{item.title}</div>
+      <div className='Item__price'>100 p</div>
       <div className='Item__actions'>
         <button onClick={() => onDelete(item.code)}>
-          Удалить
+          Добавить
         </button>
       </div>
     </div>

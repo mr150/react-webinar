@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     padding: 20px;
+    column-gap: 20px;
     transition: background-color 1s;
 }
 
@@ -10,9 +11,6 @@
     background: #75aaf1;
 }
 
-.Item__title{
-  margin-left: 20px;
-}
-.Item__actions{
+.Item__price{
     margin-left: auto;
 }

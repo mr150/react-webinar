@@ -4,9 +4,13 @@ import './styles.css';
 
 function Controls({onCreate}){
   console.log('Controls');
-  return <div className='Controls'>
-    <button onClick={onCreate}> Добавить</button>
-  </div>
+
+  return (
+    <div className='Controls'>
+      <div>В корзине: 3 товара / 243 ₽</div>
+      <button onClick={onCreate}> Перейти</button>
+    </div>
+  );
 }
 
 Controls.propTypes = {

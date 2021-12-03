@@ -2,5 +2,7 @@
 .Controls{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     padding: 20px;
+    column-gap: 20px;
 }

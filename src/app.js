@@ -17,7 +17,7 @@ function App({store}) {
   }
 
   return (
-    <Layout head={<h1>Приложение на чистом JS</h1>}>
+    <Layout head={<h1>Магазин</h1>}>
       <Controls onCreate={callbacks.onCreateItem}/>
       <List items={store.getState().items}
             onSelectItem={callbacks.onSelectItem}
