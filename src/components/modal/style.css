@@ -1,0 +1,30 @@
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 960px;
+  height: 100%;
+  max-height: 580px;
+  background: #fff;
+	padding-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%,-50%);
+}
+
+.Modal__header {
+  display: flex;
+  padding: 25px 20px;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 20px;
+  background: #F5F5F5;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+}
+
+.Modal__title {
+	font-size: 2rem;
+	margin: 0px;
+}
