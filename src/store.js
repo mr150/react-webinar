@@ -68,20 +68,15 @@ class Store {
   }
 
   /**
-   * Выделение записи по её коду
+   * Добавление товара в корзину
    * @param code
    */
-  selectItem(code) {
+  addToCart(code) {
     this.setState({
-      items: this.state.items.map(item => {
-        if (item.code === code){
-          return {
-            ...item,
-            selected: !item.selected
-          };
-        }
-        return item;
-      })
+      items: this.state.items,
+      cart: this.state.cart.concat(
+        this.state.items.find(item => item.code === code)
+      ),
     });
   }
 }

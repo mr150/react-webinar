@@ -10,18 +10,18 @@ import Layout from "./components/layout";
 function App({store}) {
   console.log('App');
 
+  const state = store.getState();
+
   const callbacks = {
     onCreateItem: useCallback(() => store.createItem(), [store]),
-    onSelectItem: useCallback((code) => store.selectItem(code), [store]),
-    onDeleteItem: useCallback((code) => store.deleteItem(code), [store])
-  }
+    onAddToCart: useCallback((code) => store.addToCart(code), [state.cart]),
+  };
 
   return (
     <Layout head={<h1>Магазин</h1>}>
-      <Controls onCreate={callbacks.onCreateItem}/>
-      <List items={store.getState().items}
-            onSelectItem={callbacks.onSelectItem}
-            onDeleteItem={callbacks.onDeleteItem}/>
+      <Controls cart={state.cart} onCreate={callbacks.onCreateItem}/>
+      <List items={state.items}
+            onAddToCart={callbacks.onAddToCart}/>
     </Layout>
   );
 }

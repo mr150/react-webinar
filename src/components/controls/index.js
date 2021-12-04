@@ -1,14 +1,20 @@
 import React from "react";
 import propTypes from 'prop-types';
+import plural from 'plural-ru';
 import './styles.css';
 
-function Controls({onCreate}){
+function Controls({onCreate, cart}){
   console.log('Controls');
 
   return (
     <div className='Controls'>
-      <div>В корзине: 3 товара / 243 ₽</div>
-      <button onClick={onCreate}> Перейти</button>
+      <div>В корзине: </div>
+      <b>{
+        cart.length ?
+          `${cart.length} ${plural(cart.length, 'товар', 'товара', 'товаров')} / ${cart.reduce((sum, item) => sum += item.price, 0)} ₽` :
+          ' пусто'
+      }</b>
+      <button className="Controls__go" onClick={onCreate}>Перейти</button>
     </div>
   );
 }

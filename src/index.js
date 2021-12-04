@@ -8,14 +8,16 @@ const root = document.getElementById("app");
 // Состояние приложения
 const store = new Store({
   items: [
-    {code: 1, title: 'Название элемента'},
-    {code: 2, title: 'Некий объект'},
-    {code: 3, title: 'Заголовок'},
-    {code: 4, title: 'Короткое название'},
-    {code: 5, title: 'Запись'},
-    {code: 6, title: 'Пример названия'},
-    {code: 7, title: 'Седьмой'}
-  ]
+    {code: 1, title: 'Название товара', price: 100},
+    {code: 2, title: 'Книга про React', price: 800},
+    {code: 3, title: 'Хлеб', price: 45},
+    {code: 4, title: 'Tesla Cybertruck', price: 7654320},
+    {code: 5, title: 'Телефон iPhone XIXV', price: 120000},
+    {code: 6, title: 'Карандаши цветные', price: 111},
+    {code: 7, title: 'Товар сюрприз', price: 0}
+  ],
+  cart: [
+  ],
 });
 
 // Сообщаем реакту что и куда рендерить.
