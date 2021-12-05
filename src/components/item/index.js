@@ -3,30 +3,39 @@ import propTypes from 'prop-types';
 import Price from '../price';
 import './styles.css';
 
-function Item({item, onAdd}){
+function Item({item, onAdd, isTable, className}){
   console.log('Item', item.title);
+  let ItemTag = 'div',
+      PartTag = 'div';
+
+  if(isTable) {
+    ItemTag = 'tr';
+    PartTag = 'td';
+  }
 
   return (
-    <div className='Item'>
-      <div className='Item__number'>{item.code}</div>
-      <div className='Item__title'>{item.title}</div>
-      <Price className='Item__price'>{item.price}</Price>
-      <div className='Item__actions'>
-        <button onClick={() => onAdd(item.code)}>
-          Добавить
-        </button>
-      </div>
-    </div>
+    <ItemTag className={'Item ' + className}>
+      <PartTag>{item.code}</PartTag>
+      <PartTag className='Item__title'>{item.title}</PartTag>
+      <Price type={PartTag} className='Item__price'>{item.price}</Price>
+      {
+        item.amount === undefined ?
+          <PartTag><button onClick={() => onAdd(item.code)}>Добавить</button></PartTag> :
+        <PartTag>{item.amount} шт</PartTag>
+      }
+    </ItemTag>
   );
+
 }
 
 Item.propTypes = {
   item: propTypes.object.isRequired,
   onAdd: propTypes.func.isRequired,
-}
+  isTable: propTypes.bool,
+};
 
 Item.defaultProps = {
   onAdd: () => {},
-}
+};
 
 export default React.memo(Item);
