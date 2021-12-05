@@ -92,6 +92,18 @@ class Store {
       cart: this.state.cart,
     });
   }
+
+  /**
+   * Открыть/закрыть модалку
+   * @param curItem
+   */
+  toggleModal(openModal) {
+    this.setState({
+      items: this.state.items,
+      cart: this.state.cart,
+      openModal
+    });
+  }
 }
 
 export default Store;

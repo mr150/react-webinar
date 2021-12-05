@@ -25,6 +25,10 @@
 }
 
 .Modal__title {
-	font-size: 2rem;
+	font-size: 32px;
 	margin: 0px;
+}
+
+.Modal__spacer {
+	margin-top: 75px;
 }

@@ -10,7 +10,7 @@ function Modal({onClose, hidden, title, children}){
       <div className='Modal'>
         <header className='Modal__header'>
           <h2 className='Modal__title'>{title}</h2>
-          <button onClick={() => onClose()}>Закрыть</button>
+          <button onClick={onClose}>Закрыть</button>
         </header>
         {children}
       </div>

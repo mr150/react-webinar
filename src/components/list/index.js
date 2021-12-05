@@ -18,7 +18,7 @@ function List({items, onAddToCart, isTable, className, children}){
 
 List.propTypes = {
   items: propTypes.arrayOf(propTypes.object).isRequired,
-  onAddToCart: propTypes.func,
+  onAddToCart: propTypes.func.isRequired,
   isTable: propTypes.bool,
 };
 

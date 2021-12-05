@@ -4,7 +4,7 @@ import {formatPrice} from '../price';
 import plural from 'plural-ru';
 import './styles.css';
 
-function Controls({onCreate, cart}){
+function Controls({onOpenCart, cart}){
   console.log('Controls');
 
   const productsCount = cart.length && cart.reduce((sum, item) => sum += item.amount, 0);
@@ -18,17 +18,19 @@ function Controls({onCreate, cart}){
            ${formatPrice(cart.reduce((sum, item) => sum += item.price * item.amount, 0))}` :
           'пусто'
       }</b>
-      <button className="Controls__go" onClick={onCreate}>Перейти</button>
+      <button className="Controls__go" onClick={onOpenCart}>Перейти</button>
     </div>
   );
 }
 
 Controls.propTypes = {
-  onCreate: propTypes.func.isRequired
+  onOpenCart: propTypes.func.isRequired,
+  cart: propTypes.arrayOf(propTypes.object).isRequired,
 }
 
 Controls.defaultProps = {
-  onCreate: () => {}
+  onOpenCart: () => {},
+  cart: [],
 }
 
 export default React.memo(Controls);
