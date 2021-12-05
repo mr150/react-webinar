@@ -24,6 +24,7 @@ List.propTypes = {
 
 List.defaultProps = {
   items: [],
+  className: '',
   onAddToCart: () => {},
 };
 

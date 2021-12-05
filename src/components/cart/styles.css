@@ -2,8 +2,14 @@
 	width: 100%;
 }
 
-.Cart__sum td{
+.Cart__sum {
+	position: sticky;
+	bottom: 0px;
+	background: #fff;
 	font-weight: 700;
+}
+
+.Cart__sum :last-child{
 	padding-left: 40px;
 }
 

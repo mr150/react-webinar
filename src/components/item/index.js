@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
 import propTypes from 'prop-types';
 import Price from '../price';
 import './styles.css';
@@ -36,6 +36,7 @@ Item.propTypes = {
 
 Item.defaultProps = {
   onAdd: () => {},
+  className: '',
 };
 
 export default React.memo(Item);

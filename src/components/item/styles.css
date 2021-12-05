@@ -11,7 +11,6 @@ tr.Item{
 }
 
 .Item > td{
-  min-width: max-content;
   padding: 20px 10px;
 }
 
@@ -22,11 +21,16 @@ tr.Item{
 .Item > td:last-child{
   padding-right: 20px;
   padding-left: 40px;
+	width: 50px;
 }
 
 td.Item__title {
-  width: 80%;
+  width: 72%;
 	text-align: left;
+}
+
+td.Item__price{
+	width: 90px;
 }
 
 .Item__price{

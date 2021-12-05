@@ -24,6 +24,12 @@
 	border-top-right-radius: inherit;
 }
 
+
+.Modal__body {
+	max-height: 438px;
+  overflow: auto;
+}
+
 .Modal__title {
 	font-size: 32px;
 	margin: 0px;

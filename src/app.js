@@ -28,8 +28,8 @@ function App({store}) {
         <List items={state.items}
               onAddToCart={callbacks.onAddToCart}/>
       </Layout>
-      <Modal title='Корзина' onClose={callbacks.onCloseModal} hidden={!state.openModal}>
-        <Cart className='Modal__spacer' items={state.cart}/>
+      <Modal className='Modal__spacer' title='Корзина' onClose={callbacks.onCloseModal} hidden={!state.openModal}>
+        <Cart items={state.cart}/>
       </Modal>
     </>
   );
