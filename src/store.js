@@ -69,14 +69,27 @@ class Store {
 
   /**
    * Добавление товара в корзину
-   * @param code
+   * @param curItem
    */
-  addToCart(code) {
+  addToCart(curItem) {
+    const itemInCart = this.state.cart.find(item => item.code === curItem.code);
+
+    if(itemInCart === undefined) {
+      this.state.cart = this.state.cart.concat(
+        {
+          ...curItem,
+          amount: 1,
+        }
+      );
+    } else {
+      this.state.cart = this.state.cart.map(
+        (item) => item === itemInCart ? {...item, amount: item.amount + 1} : item
+      );
+    }
+
     this.setState({
       items: this.state.items,
-      cart: this.state.cart.concat(
-        this.state.items.find(item => item.code === code)
-      ),
+      cart: this.state.cart,
     });
   }
 }

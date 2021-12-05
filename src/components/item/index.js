@@ -20,7 +20,7 @@ function Item({item, onAdd, isTable, className}){
       <Price type={PartTag} className='Item__price'>{item.price}</Price>
       {
         item.amount === undefined ?
-          <PartTag><button onClick={() => onAdd(item.code)}>Добавить</button></PartTag> :
+          <PartTag><button onClick={() => onAdd(item)}>Добавить</button></PartTag> :
         <PartTag>{item.amount} шт</PartTag>
       }
     </ItemTag>
