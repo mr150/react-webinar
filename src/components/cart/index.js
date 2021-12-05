@@ -2,6 +2,7 @@ import React from 'react';
 import Price from '../price';
 import List from '../list';
 import propTypes from 'prop-types';
+import {sumPrices, sumAmount} from '../../utils';
 import './styles.css';
 
 function Cart({items, className}){
@@ -12,8 +13,8 @@ function Cart({items, className}){
       <List items={items} className={'Cart ' + className} isTable>
         <tr className='Item Cart__sum'>
           <td colSpan='2'>Итого </td>
-          <Price type='td'>{items.reduce((sum, item) => sum += item.price * item.amount, 0)}</Price>
-          <td>{items.reduce((sum, item) => sum += item.amount, 0)} шт</td>
+          <Price type='td'>{sumPrices(items)}</Price>
+          <td>{sumAmount(items)} шт</td>
         </tr>
       </List> :
     <div className='Cart__empty'>Ваша корзина пуста</div>
@@ -26,6 +27,7 @@ Cart.propTypes = {
 
 Cart.defaultProps = {
   items: [],
+  className: '',
 };
 
 export default React.memo(Cart);
