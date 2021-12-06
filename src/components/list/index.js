@@ -7,11 +7,17 @@ function List({items, onAddToCart, isTable, className, children}){
   console.log('List');
   const Type = isTable ? 'table' : 'div';
 
+  const elems = items.map(
+    item => <Item className='List__item' isTable={isTable} key={item.code} item={item} onAdd={onAddToCart}/>
+  );
+
   return (
-    <Type className={'List ' + className}>{items.map(
-      item => <Item className='List__item' isTable={isTable} key={item.code} item={item} onAdd={onAddToCart}/>
-    )}
-      {children}
+    <Type className={'List ' + className}>
+      {
+        isTable ?
+          <tbody>{elems}{children}</tbody> :
+          <>{elems}{children}</>
+      }
     </Type>
   );
 }
