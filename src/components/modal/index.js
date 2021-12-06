@@ -6,7 +6,7 @@ function Modal({onClose, hidden, title, className, children}){
   console.log('Modal');
 
   return (
-    <div className='overlay' hidden={hidden}>
+    <div className='overlay' onClick={onClose} hidden={hidden}>
       <div className='Modal'>
         <header className='Modal__header'>
           <h2 className='Modal__title'>{title}</h2>

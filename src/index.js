@@ -16,8 +16,12 @@ const store = new Store({
     {code: 6, title: 'Карандаши цветные', price: 111},
     {code: 7, title: 'Товар сюрприз', price: 0}
   ],
-  cart: [
-  ],
+  cart: {
+    sumPrice: 0,
+    sumCount: 0,
+    items: [
+    ],
+  }
 });
 
 // Сообщаем реакту что и куда рендерить.

@@ -72,24 +72,29 @@ class Store {
    * @param curItem
    */
   addToCart(curItem) {
-    const itemInCart = this.state.cart.find(item => item.code === curItem.code);
+    let products = this.state.cart.items;
+    const indexInCart = products.findIndex(item => item.code === curItem.code);
 
-    if(itemInCart === undefined) {
-      this.state.cart = this.state.cart.concat(
+    if(indexInCart === -1) {
+      products = products.concat(
         {
           ...curItem,
           amount: 1,
         }
       );
     } else {
-      this.state.cart = this.state.cart.map(
-        (item) => item === itemInCart ? {...item, amount: item.amount + 1} : item
+      products = products.map(
+        (item, i) => i === indexInCart ? {...item, amount: item.amount + 1} : item
       );
     }
 
     this.setState({
       items: this.state.items,
-      cart: this.state.cart,
+      cart: {
+        sumPrice: this.state.cart.sumPrice + curItem.price,
+        sumCount: this.state.cart.sumCount + 1,
+        items: products,
+      }
     });
   }
 

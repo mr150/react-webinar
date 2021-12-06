@@ -44,14 +44,6 @@ export class ProviderClass extends React.Component {
   }
 }
 
-export function sumPrices(items) {
-  return items.reduce((sum, item) => sum += item.price * item.amount, 0);
-}
-
-export function sumAmount(items) {
-  return items.reduce((sum, item) => sum += item.amount, 0);
-}
-
 export function formatPrice(value) {
   let result = '',
       strValue = value.toString();

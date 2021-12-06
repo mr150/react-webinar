@@ -24,12 +24,12 @@ function App({store}) {
   return (
     <>
       <Layout head={<h1>Магазин</h1>}>
-        <Controls cart={state.cart} onOpenCart={callbacks.onOpenCart}/>
+        <Controls sumPrice={state.cart.sumPrice} sumCount={state.cart.sumCount} onOpenCart={callbacks.onOpenCart}/>
         <List items={state.items}
               onAddToCart={callbacks.onAddToCart}/>
       </Layout>
       <Modal className='Modal__spacer' title='Корзина' onClose={callbacks.onCloseModal} hidden={!state.openModal}>
-        <Cart items={state.cart}/>
+        <Cart sumPrice={state.cart.sumPrice} sumCount={state.cart.sumCount} items={state.cart.items}/>
       </Modal>
     </>
   );

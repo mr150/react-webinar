@@ -2,10 +2,9 @@ import React from 'react';
 import Price from '../price';
 import List from '../list';
 import propTypes from 'prop-types';
-import {sumPrices, sumAmount} from '../../utils';
 import './styles.css';
 
-function Cart({items, className}){
+function Cart({items, sumCount, sumPrice, className}){
   console.log('Cart');
 
   return (
@@ -13,8 +12,8 @@ function Cart({items, className}){
       <List items={items} className={'Cart ' + className} isTable>
         <tr className='Item Cart__sum'>
           <td colSpan='2'>Итого </td>
-          <Price type='td'>{sumPrices(items)}</Price>
-          <td>{sumAmount(items)} шт</td>
+          <Price type='td'>{sumPrice}</Price>
+          <td>{sumCount} шт</td>
         </tr>
       </List> :
     <div className='Cart__empty'>Ваша корзина пуста</div>
@@ -23,11 +22,15 @@ function Cart({items, className}){
 
 Cart.propTypes = {
   items: propTypes.arrayOf(propTypes.object).isRequired,
+  sumCount: propTypes.number.isRequired,
+  sumPrice: propTypes.number.isRequired,
 };
 
 Cart.defaultProps = {
   items: [],
   className: '',
+  sumCount: 0,
+  sumPrice: 0,
 };
 
 export default React.memo(Cart);
