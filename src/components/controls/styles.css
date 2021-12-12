@@ -2,11 +2,5 @@
 .Controls{
     display: flex;
     justify-content: flex-end;
-    align-items: center;
     padding: 20px;
-    column-gap: 15px;
-}
-
-.Controls__go{
-	padding: 0px 10px;
 }

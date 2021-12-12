@@ -1,42 +1,28 @@
-import React from "react";
+import React from 'react';
 import propTypes from 'prop-types';
-import Price from '../price';
 import './styles.css';
+import numberFormat from "../../utils/number-format";
 
-function Item({item, onAdd, isTable, className}){
-  console.log('Item', item.title);
-  let ItemTag = 'div',
-      PartTag = 'div';
-
-  if(isTable) {
-    ItemTag = 'tr';
-    PartTag = 'td';
-  }
-
+function Item({item, onAdd}) {
   return (
-    <ItemTag className={'Item ' + className}>
-      <PartTag>{item.code}</PartTag>
-      <PartTag className='Item__title'>{item.title}</PartTag>
-      <Price type={PartTag} className='Item__price'>{item.price}</Price>
-      {
-        item.amount === undefined ?
-          <PartTag><button onClick={() => onAdd(item)}>Добавить</button></PartTag> :
-        <PartTag>{item.amount} шт</PartTag>
-      }
-    </ItemTag>
-  );
-
+    <div className='Item'>
+      <div className='Item__number'>{item._key}</div>
+      <div className='Item__title'>{item.title}</div>
+      <div className='Item__right'>
+        <div className='Item__price'>{numberFormat(item.price)} ₽</div>
+        <button onClick={() => onAdd(item._id)}>Добавить</button>
+      </div>
+    </div>
+  )
 }
 
 Item.propTypes = {
   item: propTypes.object.isRequired,
-  onAdd: propTypes.func.isRequired,
-  isTable: propTypes.bool,
-};
+  onAdd: propTypes.func,
+}
 
 Item.defaultProps = {
-  onAdd: () => {},
-  className: '',
-};
+  onAdd: () => {}
+}
 
 export default React.memo(Item);
