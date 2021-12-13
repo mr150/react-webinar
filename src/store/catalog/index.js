@@ -8,17 +8,30 @@ class CatalogStore extends StoreModule {
   initState() {
     return {
       items: [],
+      count: 0,
+      curPage: 0,
     };
   }
 
   /**
    * Загрузка списка товаров
    */
+
   async load(){
-    const response = await fetch('/api/v1/articles');
+    const response = await fetch('/api/v1/articles?fields=items(*),count');
     const json = await response.json();
     this.setState({
-      items: json.result.items
+      ...json.result
+    });
+  }
+
+  async toPage(n, limit = 10){
+    const response = await fetch(`/api/v1/articles?skip=${n * limit}&limit=` + limit);
+    const json = await response.json();
+    this.setState({
+      ...this.getState(),
+      ...json.result,
+      curPage: n,
     });
   }
 }

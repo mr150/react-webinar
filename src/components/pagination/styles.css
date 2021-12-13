@@ -1,0 +1,28 @@
+.Pagination {
+	display: flex;
+  justify-content: flex-end;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.Pagination__link {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding: 5px;
+}
+
+.Pagination__link:not([href]) {
+  color: #fff;
+	background-color: #000;
+	cursor: default;
+}
+
+.Pagination__link[href]:hover {
+	background-color: #e1e1e1;
+}
+
+.Layout__paginator{
+  margin: 20px 20px 0;
+}
