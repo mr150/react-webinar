@@ -4,9 +4,9 @@ import plural from "plural-ru";
 import numberFormat from "../../utils/number-format";
 import './styles.css';
 
-function BasketSimple({sum, amount, onOpen}) {
+function BasketSimple({sum, amount, onOpen, className}) {
   return (
-    <div className='BasketSimple'>
+    <div className={'BasketSimple ' + className}>
       <span className="BasketSimple__label">В корзине:</span>
       <span className="BasketSimple__total">
       {amount
@@ -22,11 +22,13 @@ function BasketSimple({sum, amount, onOpen}) {
 BasketSimple.propTypes = {
   onOpen: propTypes.func.isRequired,
   sum: propTypes.number,
-  amount: propTypes.number
+  amount: propTypes.number,
+  className: propTypes.string,
 }
 
 BasketSimple.defaultProps = {
   onOpen: () => {},
+  className: '',
   sum: 0,
   amount: 0
 }

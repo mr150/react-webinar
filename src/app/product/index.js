@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import Layout from '../../components/layout';
-import BasketSimple from '../../components/basket-simple';
+import TopPanel from '../../components/top-panel';
 import useStore from '../../utils/use-store';
 import useSelector from '../../utils/use-selector';
 import {useParams} from 'react-router-dom';
@@ -29,7 +29,7 @@ function Product() {
 
   return (
     <Layout head={<h1>{data.title}</h1>}>
-      <BasketSimple onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
+      <TopPanel onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
       <div className='Product'>
         <p>{data.description}</p>
         <p>Страна производитель: <b>{data.maidIn?.title} ({data.maidIn?.code})</b></p>

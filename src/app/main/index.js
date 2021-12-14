@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import Item from "../../components/item";
 import Layout from "../../components/layout";
-import BasketSimple from "../../components/basket-simple";
+import TopPanel from '../../components/top-panel';
 import List from "../../components/list";
 import Pagination from "../../components/pagination";
 import useStore from "../../utils/use-store";
@@ -40,7 +40,7 @@ function Main() {
 
   return (
     <Layout head={<h1>Магазин</h1>}>
-      <BasketSimple onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
+      <TopPanel onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
       <List items={select.items} renderItem={renders.item}/>
       <Pagination className='Layout__paginator' count={select.count} active={select.curPage} onGo={callbacks.toCatalogPage}/>
     </Layout>
