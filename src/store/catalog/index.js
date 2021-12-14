@@ -11,6 +11,7 @@ class CatalogStore extends StoreModule {
       items: [],
       count: 0,
       curPage: 0,
+      curProduct: {},
     };
   }
 
@@ -18,10 +19,11 @@ class CatalogStore extends StoreModule {
    * Загрузка списка товаров
    */
   async load(){
-    const json = await apiGet('articles', {fields: 'items(*),count'});
+    const {result} = (await apiGet('articles', {fields: 'items(*),count'}));
 
     this.setState({
-      ...json.result
+      ...this.getState(),
+      ...result
     });
   }
 
@@ -29,12 +31,25 @@ class CatalogStore extends StoreModule {
    * Переход на страницу по пагинации
    */
   async toPage(n, limit = 10){
-    const json = await apiGet('articles', {skip: n * limit, limit});
+    const {result} = (await apiGet('articles', {skip: n * limit, limit}));
 
     this.setState({
       ...this.getState(),
-      ...json.result,
+      ...result,
       curPage: n,
+    });
+  }
+
+  async loadProduct(id){
+    const {result} = (await apiGet('articles/' + id, {fields: '*,maidIn(title,code),category(title)'})),
+          state = this.getState();
+
+    if(state.items.find(item => item._id === result._id) === undefined)
+      state.items.push(result);
+
+    this.setState({
+      ...state,
+      curProduct: result,
     });
   }
 }

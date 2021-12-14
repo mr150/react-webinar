@@ -1,0 +1,17 @@
+.Product {
+	padding: 20px 40px 0;
+}
+
+.Product p {
+	margin: 20px 0px;
+}
+
+.Product > :first-child {
+	margin-top: 0px;
+}
+
+.Product__price {
+	display: block;
+	margin-bottom: 20px;
+	font-size: 24px;
+}
