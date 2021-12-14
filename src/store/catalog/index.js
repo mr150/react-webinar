@@ -11,7 +11,10 @@ class CatalogStore extends StoreModule {
       items: [],
       count: 0,
       curPage: 0,
-      curProduct: {},
+      curProduct: {
+        description: '...',
+        price: 0
+      },
     };
   }
 

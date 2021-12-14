@@ -14,15 +14,15 @@
 }
 
 .ItemBasket__title {
-    width: 100%;
     padding: 20px 10px;
 }
 
 .ItemBasket__right {
-    padding: 20px 20px 20px 10px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  margin-left: auto;
+  padding: 20px 20px 20px 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .ItemBasket__cell {
