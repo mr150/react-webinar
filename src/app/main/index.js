@@ -19,7 +19,10 @@ function Main() {
 
   // Загрузка тестовых данных при первом рендере
   useEffect(async () => {
-    await store.catalog.load();
+    if(select.curPage > 0)
+      await store.catalog.toPage(select.curPage);
+    else
+      await store.catalog.load();
   }, []);
 
   const store = useStore();
