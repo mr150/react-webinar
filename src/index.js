@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Store from './store';
 import App from './app';
-import Product from './app/product';
+import ProductPage from './app/product-page';
 import Main from "./app/main";
 import StoreProvider from './store/provider';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
@@ -20,7 +20,7 @@ ReactDOM.render(
       <Routes>
         <Route path='/' element={<App/>}>
           <Route index element={<Main/>} />
-          <Route path='product/:id' element={<Product/>} />
+          <Route path='product/:id' element={<ProductPage/>} />
         </Route>
       </Routes>
     </StoreProvider>

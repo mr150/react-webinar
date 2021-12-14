@@ -1,7 +1,6 @@
 import React from 'react';
 import Main from "./main";
 import Basket from "./basket";
-import Product from "./product";
 import useSelector from "../utils/use-selector";
 import {Outlet} from 'react-router-dom';
 import '../styles.css';
