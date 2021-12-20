@@ -8,7 +8,7 @@ import {useParams} from 'react-router-dom';
 
 function ProductPage() {
   const select = useSelector(state => ({
-    product: state.catalog.curProduct,
+    product: state.product.current,
     amount: state.basket.amount,
     sum: state.basket.sum
   }));
@@ -18,7 +18,7 @@ function ProductPage() {
         data = select.product;
 
   useEffect(async () => {
-    await store.catalog.loadProduct(params.id);
+    await store.product.load(params.id);
   }, [params.id]);
 
   const callbacks = {
