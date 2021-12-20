@@ -2,9 +2,9 @@ import React from 'react';
 import propTypes from 'prop-types';
 import './styles.css';
 
-function Pagination({count, onGo, active, itemsPerPage, className}) {
+function Pagination({count, onGo, active, itemsPerPage}) {
   return (
-    <ul className={'Pagination ' + className}>
+    <ul className={'Pagination'}>
       {new Array(Math.ceil(count / itemsPerPage)).fill(0).map((item, i) =>
         <li key={i}>
           <a
@@ -25,13 +25,11 @@ Pagination.propTypes = {
   active: propTypes.number,
   itemsPerPage: propTypes.number,
   onGo: propTypes.func.isRequired,
-  className: propTypes.string,
 };
 
 Pagination.defaultProps = {
   active: 0,
   itemsPerPage: 10,
-  className: '',
 };
 
 export default React.memo(Pagination);

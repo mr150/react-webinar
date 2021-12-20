@@ -42,7 +42,7 @@ function Main() {
     <Layout head={<h1>Магазин</h1>}>
       <TopPanel onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
       <List items={select.items} renderItem={renders.item}/>
-      <Pagination className='Layout__paginator' count={select.count} active={select.curPage} onGo={callbacks.toCatalogPage}/>
+      <Pagination count={select.count} active={select.curPage} onGo={callbacks.toCatalogPage}/>
     </Layout>
   );
 }
