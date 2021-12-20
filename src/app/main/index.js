@@ -19,10 +19,7 @@ function Main() {
 
   // Загрузка тестовых данных при первом рендере
   useEffect(async () => {
-    if(select.curPage > 0)
-      await store.catalog.toPage(select.curPage);
-    else
-      await store.catalog.load();
+    await store.catalog.load(select.curPage, 10, 'items(*),count');
   }, []);
 
   const store = useStore();
@@ -31,7 +28,7 @@ function Main() {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
     openModal: useCallback(() => store.modals.open('basket'), [store]),
     toCatalogPage: useCallback(async (i) => {
-      await store.catalog.toPage(i);
+      await store.catalog.load(i);
     }, [store]),
   }
 

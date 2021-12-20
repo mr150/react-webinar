@@ -23,20 +23,8 @@ class CatalogStore extends StoreModule {
   /**
    * Загрузка списка товаров
    */
-  async load(){
-    const {result} = (await apiGet('articles', {fields: 'items(*),count'}));
-
-    this.setState({
-      ...this.getState(),
-      ...result
-    });
-  }
-
-  /**
-   * Переход на страницу по пагинации
-   */
-  async toPage(n, limit = 10){
-    const {result} = (await apiGet('articles', {skip: n * limit, limit}));
+  async load(n = 0, limit = 10, fields = 'items(*)') {
+    const {result} = (await apiGet('articles', {skip: n * limit, limit, fields}));
 
     this.setState({
       ...this.getState(),
