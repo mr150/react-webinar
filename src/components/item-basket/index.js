@@ -4,11 +4,12 @@ import numberFormat from "../../utils/number-format";
 import {Link} from 'react-router-dom';
 import './styles.css';
 
-function ItemBasket({item, onClose}) {
+
+function ItemBasket({item, link, onLink}) {
   return (
     <div className='ItemBasket'>
       <div className='ItemBasket__number'>{item._key}</div>
-      <Link className='ItemBasket__title link' onClick={onClose} to={'/product/' + item._id}>{item.title}</Link>
+      <div className='ItemBasket__title' onClick={onLink}><Link to={link}>{item.title}</Link></div>
       <div className='ItemBasket__right'>
         <span className="ItemBasket__cell">{numberFormat(item.price || 0)} ₽</span>
         <span className="ItemBasket__cell">{numberFormat(item.amount || 0)} шт</span>
@@ -19,11 +20,13 @@ function ItemBasket({item, onClose}) {
 
 ItemBasket.propTypes = {
   item: propTypes.object.isRequired,
-  onClose: propTypes.func,
+  link: propTypes.string,
+  onLink: propTypes.func,
 }
 
 ItemBasket.defaultProps = {
-  onClose: () => {},
+  link: '',
+  onLink: () => {}
 }
 
 export default React.memo(ItemBasket);

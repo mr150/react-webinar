@@ -1,24 +1,30 @@
-.Pagination {
-	display: flex;
+.Pagination{
+  display: flex;
+  list-style: none;
   justify-content: flex-end;
-	padding: 0;
-  margin: 20px 20px 0;
-	list-style: none;
+  padding: 20px;
+  font-size: 18px;
 }
 
-.Pagination__link {
-	display: block;
-	color: #000;
-	text-decoration: none;
-	padding: 5px;
+.Pagination-item{
+  display: block;
+  padding: 2px 4px 3px 2px;
+  margin: 0 2px;
+  cursor: pointer;
 }
 
-.Pagination__link:not([href]) {
+.Pagination-item:hover{
+  background: #E1E1E1;
+}
+
+.Pagination-item_active,
+.Pagination-item_active:hover{
+  background: #000;
   color: #fff;
-	background-color: #000;
-	cursor: default;
 }
 
-.Pagination__link[href]:hover {
-	background-color: #e1e1e1;
+.Pagination-item_split,
+.Pagination-item_split:hover{
+  background: transparent;
+  cursor: default;
 }
