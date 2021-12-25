@@ -22,9 +22,6 @@ class CatalogStore extends StoreModule {
     return {
       items: [],
       count: 0,
-      categories: [
-        {value: '', title: 'Все'}
-      ],
       params: {
         page: 1,
         limit: 10,
@@ -34,19 +31,6 @@ class CatalogStore extends StoreModule {
       },
       waiting: true
     };
-  }
-
-  async loadCategories(){
-    const response = await fetch(`/api/v1/categories?limit=*&fields=_id,parent,title`);
-    const {result} = (await response.json());
-
-    this.setState({
-      ...this.getState(),
-      categories: this.initState().categories.concat(
-        result.items.map(item => ({value: item._id, title: item.title}))
-      ),
-      waiting: false
-    });
   }
 
   /**

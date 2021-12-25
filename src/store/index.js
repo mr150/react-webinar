@@ -92,6 +92,10 @@ class Store {
   get product(){
     return this.get('product');
   }
+
+  get categories(){
+    return this.get('categories');
+  }
 }
 
 export default Store;

@@ -16,7 +16,7 @@ function Main() {
   }, [], {backForward: true});
 
   useEffect(async () => {
-    await store.catalog.loadCategories();
+    await store.categories.load(true);
   }, []);
 
   return (
