@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Layout from "../../components/layout";
 import useStore from "../../utils/use-store";
 import Header from "../../containers/header";
@@ -14,6 +14,10 @@ function Main() {
   useInit(async () => {
     await store.catalog.initParams();
   }, [], {backForward: true});
+
+  useEffect(async () => {
+    await store.catalog.loadCategories();
+  }, []);
 
   return (
     <Layout head={<h1>Магазин</h1>}>

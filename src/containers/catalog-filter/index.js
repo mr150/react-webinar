@@ -12,6 +12,8 @@ function CatalogFilter() {
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
+    category: state.catalog.params.category,
+    categories: state.catalog.categories,
   }));
 
   // Опции для полей
@@ -26,12 +28,16 @@ function CatalogFilter() {
 
   const callbacks = {
     onSort: useCallback(sort => store.catalog.setParams({sort}), [store]),
+    onPickCategory: useCallback(
+      category => store.catalog.setParams({category, page: 1}), [store]
+    ),
     onSearch: useCallback(query => store.catalog.setParams({query, page: 1}), [store]),
     onReset: useCallback(() => store.catalog.resetParams(), [store])
   }
 
   return (
     <LayoutTools>
+      <Select onChange={callbacks.onPickCategory} value={select.category} options={select.categories}/>
       <Input onChange={callbacks.onSearch} value={select.query} placeholder={'Поиск'} theme="big"/>
       <label>Сортировка:</label>
       <Select onChange={callbacks.onSort} value={select.sort} options={options.sort}/>
