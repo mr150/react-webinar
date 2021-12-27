@@ -10,22 +10,28 @@ class CategoriesStore extends StoreModule {
   }
 
   async load(isFilter){
-    const items = [];
+    const {items} = this.getState(),
+          isEmpty = !items.length;
 
-    if(isFilter) {
-      items.push({value: '', title: 'Все'});
-      this.updateState({
-        items,
-      });
+    if(isFilter && !(items[0]?.value === '')) {
+      items.unshift({value: '', title: 'Все'});
+    } else {
+      items.shift();
     }
 
-    const {result} = (await apiGet('categories', {limit: '*', fields: '_id,parent,title'}));
+    if(isEmpty) {
+      const {result} = (await apiGet('categories', {limit: '*', fields: '_id,parent,title'}));
 
-    this.updateState({
-      items: items.concat(
-        result.items.map(item => ({value: item._id, title: item.title}))
-      ),
-    });
+      this.updateState({
+        items: items.concat(
+          result.items.map(item => ({value: item._id, title: item.title}))
+        ),
+      });
+    } else {
+      this.updateState({
+        items: items.slice(),
+      });
+    }
   }
 }
 

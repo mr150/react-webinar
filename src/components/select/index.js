@@ -13,7 +13,7 @@ function Select(props){
   }, [props.onChange])
 
   return (
-    <select className={className()} onChange={onSelect} value={props.value}>
+    <select className={className()} onChange={onSelect} name={props.name} value={props.value}>
       {props.options.map(item => (
         <option key={item.value} value={item.value}>{item.title}</option>
       ))}

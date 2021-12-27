@@ -7,3 +7,8 @@
   width: 300px;
 }
 
+.Input_theme_area{
+	width: 100%;
+	min-height: 150px;
+	resize: vertical;
+}

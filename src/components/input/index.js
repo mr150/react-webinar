@@ -25,12 +25,20 @@ function Input(props) {
 
   // CSS классы по БЭМ
   const className = cn('Input');
+  let ElmName = 'input',
+      inpType = props.type;
+
+  if(props.tagName !== undefined) {
+    ElmName = 'textarea';
+    inpType = undefined;
+  }
 
   return (
-    <input
+    <ElmName
       className={className({theme: props.theme})}
       value={value}
-      type={props.type}
+      type={inpType}
+      name={props.name}
       placeholder={props.placeholder}
       onChange={onChange}
     />
@@ -38,8 +46,12 @@ function Input(props) {
 }
 
 Input.propTypes = {
-  value: propTypes.string,
+  value: propTypes.oneOfType([
+    propTypes.string,
+    propTypes.number,
+  ]),
   type: propTypes.string,
+  name: propTypes.string,
   placeholder: propTypes.string,
   onChange: propTypes.func,
   theme: propTypes.string,

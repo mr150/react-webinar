@@ -1,4 +1,5 @@
 import StoreModule from "../module";
+import {apiGet} from '../../utils/api';
 
 class ArticleStore extends StoreModule {
 
@@ -8,6 +9,8 @@ class ArticleStore extends StoreModule {
   initState() {
     return {
       data: {},
+      requestResult: {},
+      countries: [],
       waiting: true
     };
   }
@@ -19,6 +22,7 @@ class ArticleStore extends StoreModule {
 
     this.updateState({
       waiting: true,
+      requestResult: {},
       data: {}
     });
 
@@ -38,6 +42,21 @@ class ArticleStore extends StoreModule {
         waiting: false
       });
     }
+  }
+
+  async loadCountries(){
+    this.updateState({
+      waiting: true,
+    });
+
+    const {result} = (await apiGet('countries', {limit: '*', fields: 'title,_id'}));
+
+    this.updateState({
+      countries: result.items
+        .map(item => ({value: item._id, title: item.title}))
+        .sort((a, b) => (a.title > b.title) ? 1 : -1),
+      waiting: false
+    });
   }
 }
 
