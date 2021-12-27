@@ -12,7 +12,7 @@ function ArticleCard({article, onAdd}) {
 
   return (
     <div className={className()}>
-      <Link to='?edit'>Редактировать</Link>
+      <Link to='./edit'>Редактировать</Link>
       <div className={className('Description')}>{article.description}</div>
       <div className={className('Prop')}>
         <div className={className('Label')}>Страна производитель:</div>
@@ -46,7 +46,7 @@ ArticleCard.propTypes = {
 
 ArticleCard.defaultProps = {
   article: {},
-  onAdd: () => {}
+  onAdd: () => {},
 }
 
 export default React.memo(ArticleCard);

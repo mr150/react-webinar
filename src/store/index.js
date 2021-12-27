@@ -100,6 +100,10 @@ class Store {
   get article(){
     return this.get('article');
   }
+
+  get articleForm(){
+    return this.get('articleForm');
+  }
 }
 
 export default Store;

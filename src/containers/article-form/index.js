@@ -8,25 +8,23 @@ import Input from "../../components/input";
 import Select from "../../components/select";
 import './styles.css';
 
-function ArticleForm({article, onSave}) {
+function ArticleForm({article, onSubmit}) {
 
   // CSS классы по БЭМ
   const className = cn('ArticleForm');
 
-  const store = useStore();
-
   const select = useSelector(state => ({
-    countries: state.article.countries,
+    countries: state.articleForm.countries,
     categories: state.categories.items,
-    message: state.article.requestResult,
+    result: state.articleForm.requestResult,
   }));
 
   let [category, setCategory] = useState(article.category?._id);
   let [country, setCountry] = useState(article.maidIn?._id);
 
   return (
-    <form className={className()} onSubmit={onSave}>
-      {select.message.success !== true && <Link to={'/articles/' + article._id}>Отмена</Link>}
+    <form className={className()} onSubmit={onSubmit}>
+      {select.result.success !== true && <Link to={'/articles/' + article._id}>Отмена</Link>}
       <p>
         <label>
           <span className={className('Label')}>Название</span>
@@ -71,9 +69,13 @@ function ArticleForm({article, onSave}) {
 
       <button>Сохранить</button>
       {
-        select.message.success === false ?
-        (<p>Произошла ошибка. Код: "{select.message.code}", Сообщение: "{select.message.msg}"</p>) :
-        (select.message.success === true) && <p>Изменения сохранены</p>
+        select.result.success === false ?
+          (<ul>
+            {select.result.errors.map((item, i) => (
+              <li key={i}>Ошибка в поле <i>{item.path}</i>: {item.message}</li>
+            ))}
+           </ul>) :
+        (select.result.success === true) && <p>Изменения сохранены</p>
       }
     </form>
   );

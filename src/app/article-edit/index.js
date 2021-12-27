@@ -4,40 +4,42 @@ import useStore from "../../utils/use-store";
 import useSelector from "../../utils/use-selector";
 import {useParams} from "react-router-dom";
 import Spinner from "../../components/spinner";
-import ArticleCard from "../../components/article-card";
+import ArticleForm from "../../containers/article-form";
 import Header from "../../containers/header";
 import useInit from "../../utils/use-init";
 
-function Article() {
+function ArticleEdit() {
 
   const store = useStore();
-  // Параметры из пути
   const params = useParams();
 
-  // Начальная загрузка
   useInit(async () => {
-    await store.get('article').load(params.id);
+    await store.article.load(params.id, true);
+    await store.categories.load();
+    await store.articleForm.loadCountries();
   }, [params.id]);
 
   const select = useSelector(state => ({
     article: state.article.data,
-    waiting: state.article.waiting,
+    waiting: state.articleForm.waiting,
   }));
 
   const callbacks = {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
+    saveChanges: useCallback((e) => {
+      e.preventDefault();
+      store.articleForm.edit(e.target);
+    }, [select.article]),
   };
 
   return (
     <Layout head={<h1>{select.article.title}</h1>}>
-
       <Header/>
-
       <Spinner active={select.waiting}>
-        <ArticleCard article={select.article} onAdd={callbacks.addToBasket}/>
+        <ArticleForm article={select.article} onSubmit={callbacks.saveChanges}/> :
       </Spinner>
     </Layout>
   );
 }
 
-export default React.memo(Article);
+export default React.memo(ArticleEdit);
