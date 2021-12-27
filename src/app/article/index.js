@@ -30,6 +30,10 @@ function Article() {
 
   const callbacks = {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
+    saveChanges: useCallback((e) => {
+      e.preventDefault();
+      store.article.edit(e.target);
+    }, [select.article]),
   };
 
   return (
