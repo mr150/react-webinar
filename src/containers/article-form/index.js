@@ -26,7 +26,7 @@ function ArticleForm({article, onSubmit}) {
   // подписи к инпутам, разделители и т.д. будут в составе компонентов
   return (
     <form className={className()} onSubmit={onSubmit}>
-      <Link to={'/articles/' + article._id}>Просмотр</Link>
+      {article._id && <Link to={'/articles/' + article._id}>Просмотр</Link>}
       <p>
         <label>
           <span className={className('Label')}>Название</span>
@@ -71,6 +71,7 @@ function ArticleForm({article, onSubmit}) {
 
       <button>Сохранить</button>
       {
+        // Это можно было вынести в отдельный компонент, но не успел
         select.result.success === false ?
           (<ul>
             {select.result.errors.map((item, i) => (

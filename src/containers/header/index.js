@@ -15,6 +15,8 @@ function Header() {
   const options = {
     menuItems: useMemo(() => ([
       {key: 1, title: 'Главная', link: '/'},
+      // Ты упоминал, что эту ссылку поместить вниз, но я не успевал сверстать и добавил ее сюда
+      {key: 2, title: 'Новый товар', link: '/create'},
     ]), [])
   }
 

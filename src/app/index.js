@@ -21,6 +21,7 @@ function App() {
         <Route path={''} element={<Main/>}/>
         <Route path={"/articles/:id"} element={<Article/>}/>
         <Route path={"/articles/:id/edit"} element={<ArticleEdit/>}/>
+        <Route path={"/create"} element={<ArticleEdit creation/>}/>
       </Routes>
       {select.name === 'basket' && <Basket/>}
     </>
