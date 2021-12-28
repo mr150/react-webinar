@@ -30,6 +30,7 @@ class ArticleStore extends StoreModule {
 
       this.updateState({
         data: json.result,
+        pageTitle: json.result.title,
         waiting: false
       });
 

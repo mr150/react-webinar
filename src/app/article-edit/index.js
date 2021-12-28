@@ -14,21 +14,17 @@ function ArticleEdit({creation}) {
   const params = useParams();
 
   useInit(async () => {
-    if(!creation) await store.article.load(params.id);
+    if(creation) await store.articleForm.reset(false);
+    else await store.articleForm.load(params.id);
+
     await store.categories.load();
     await store.countries.load();
-  }, [params.id, creation]);
-
-  useInit(() => {
-    store.articleForm.reset(!creation);
   }, [params.id]);
 
-  const select = useSelector(state => (creation ? {
+  const select = useSelector(state => ({
     article: state.articleForm.data,
+    title: state.articleForm.pageTitle,
     waiting: state.articleForm.waiting || state.countries.waiting,
-  } : {
-    article: state.article.data,
-    waiting: state.article.waiting || state.countries.waiting,
   }));
 
   const callbacks = {
@@ -37,11 +33,11 @@ function ArticleEdit({creation}) {
       e.preventDefault();
       if(creation) store.articleForm.create(e.target);
       else store.articleForm.edit(e.target);
-    }, [select.article, creation]),
+    }, [select.article]),
   };
 
   return (
-    <Layout head={<h1>{select.article.title}</h1>}>
+    <Layout head={<h1>{select.title}</h1>}>
       <Header/>
       <Spinner active={select.waiting}>
         <ArticleForm article={select.article} onSubmit={callbacks.submit}/>

@@ -5,9 +5,8 @@ class ArticleFormStore extends StoreModule {
   initState() {
     return {
       requestResult: {},
-      data: {
-        title: 'Новый товар'
-      },
+      pageTitle: 'Новый товар',
+      data: {},
       waiting: true
     };
   }
@@ -16,12 +15,26 @@ class ArticleFormStore extends StoreModule {
     this.updateState({...this.initState(), waiting});
   }
 
-  async edit(form){
+  async load(id){
     this.reset();
-
     const articleState = this.store.article.getState();
-    const formData = getFormData(form);
-    formData._id = articleState.data._id;
+
+    if(articleState.data._id === id) {
+      this.updateState({
+        waiting: false,
+        pageTitle: articleState.data.title,
+        data: articleState.data
+      });
+    } else {
+      await this.store.article.load.call(this, id);
+    }
+  }
+
+  async edit(form){
+    const formData = getFormData(form),
+          oldTitle = this.getState().pageTitle;
+    formData._id = this.getState().data._id;
+    this.reset();
 
     const response = await fetch('/api/v1/articles/' + formData._id, {
       method: 'put',
@@ -33,6 +46,8 @@ class ArticleFormStore extends StoreModule {
     const requestResult = {success: true};
     const newState = {
       waiting: false,
+      data: formData,
+      pageTitle: oldTitle,
       requestResult
     };
 
@@ -40,7 +55,7 @@ class ArticleFormStore extends StoreModule {
       requestResult.success = false;
       requestResult.errors = json.error.data.issues;
     } else {
-      articleState.data = formData;
+      newState.pageTitle = formData.title;
     }
 
     this.updateState(newState);
@@ -71,6 +86,7 @@ class ArticleFormStore extends StoreModule {
       requestResult.errors = json.error.data.issues;
     } else {
       newState.data = json.result;
+      newState.pageTitle = formData.title;
     }
 
     this.updateState(newState);
