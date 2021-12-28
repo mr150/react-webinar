@@ -27,7 +27,7 @@ class CategoriesStore extends StoreModule {
     if(isEmpty) {
       const {result} = (await apiGet('categories', {limit: '*', fields: '_id,parent,title'}));
 
-      // Понимаю, что это плохое решение для сортировки. Пробовал найти более простое или рекурсивное, но до чего то получше не додумался
+      // В алгоритмах я пока слабоват, но постарался сделать минимальную сложность, какую смог
       const ctgMap = result.items.reduce((map, item) => {
         map[item._id] = {
           title: item.title,
@@ -37,42 +37,29 @@ class CategoriesStore extends StoreModule {
         return map;
       }, {});
 
-      let maxLvl = 0;
+      const sorted = [];
 
       result.items.forEach(item => {
-        let parent = item.parent && item.parent._id,
+        let parentId = item.parent && item.parent._id,
             lvl = 0;
 
-        while(parent) {
-          parent = ctgMap[parent].parent;
+        while(parentId) {
+          parentId = ctgMap[parentId].parent;
           lvl++;
         }
 
         if(lvl) {
-          if(lvl > maxLvl) maxLvl = lvl;
-          item.lvl = lvl;
           item.title = '-'.repeat(lvl) + ' ' + item.title;
         }
-      });
 
-      const tree = [];
+        let parentIndex = sorted.findIndex(
+          parent => parent._id === (item.parent && item.parent._id)
+        );
 
-      for(let i = 0; i < maxLvl + 1; i++) {
-        tree.push([]);
-      }
+        if(parentIndex < 0) parentIndex = sorted.length;
+        else parentIndex++;
 
-      result.items.forEach(item => {
-        tree[item.lvl || 0].push(item);
-      })
-
-      const sorted = tree.shift();
-
-      tree.forEach(arr => {
-        arr.forEach(item => {
-          let parentIndex = sorted.findIndex(parent => parent._id === item.parent._id);
-          if(parentIndex < 0) parentIndex = sorted.length - 1;
-          sorted.splice(parentIndex + 1, 0, item);
-        });
+        sorted.splice(parentIndex, 0, item);
       });
 
       this.updateState({
