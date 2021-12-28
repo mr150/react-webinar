@@ -26,7 +26,7 @@ function ArticleForm({article, onSubmit}) {
   // подписи к инпутам, разделители и т.д. будут в составе компонентов
   return (
     <form className={className()} onSubmit={onSubmit}>
-      {select.result.success !== true && <Link to={'/articles/' + article._id}>Отмена</Link>}
+      <Link to={'/articles/' + article._id}>Просмотр</Link>
       <p>
         <label>
           <span className={className('Label')}>Название</span>
@@ -58,14 +58,14 @@ function ArticleForm({article, onSubmit}) {
       <p>
         <label>
           <span className={className('Label')}>Год выпуска</span>
-          <Input name="edition" value={article.edition}/>
+          <Input type="number" name="edition" value={article.edition}/>
         </label>
       </p>
 
       <p>
         <label>
           <span className={className('Label')}>Цена (₽)</span>
-          <Input name="price" value={article.price}/>
+          <Input type="number" name="price" value={article.price}/>
         </label>
       </p>
 
@@ -74,7 +74,7 @@ function ArticleForm({article, onSubmit}) {
         select.result.success === false ?
           (<ul>
             {select.result.errors.map((item, i) => (
-              <li key={i}>Ошибка в поле <i>{item.path}</i>: {item.message}</li>
+              <li key={i}>Ошибка в поле <b>{item.path}</b>: {item.message}</li>
             ))}
            </ul>) :
         (select.result.success === true) && <p>Изменения сохранены</p>

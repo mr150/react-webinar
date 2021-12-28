@@ -19,6 +19,10 @@ function ArticleEdit() {
     await store.countries.load();
   }, [params.id]);
 
+  useInit(() => {
+    store.articleForm.reset();
+  }, [params.id]);
+
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting || state.countries.waiting,

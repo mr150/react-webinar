@@ -6,6 +6,7 @@ class CategoriesStore extends StoreModule {
   initState() {
     return {
       items: [],
+      waiting: false,
     };
   }
 
@@ -19,7 +20,7 @@ class CategoriesStore extends StoreModule {
 
     if(isFilter && !(items[0]?.value === '')) {
       items.unshift({value: '', title: 'Все'});
-    } else {
+    } else if(items[0]?.value === '') {
       items.shift();
     }
 
@@ -50,7 +51,7 @@ class CategoriesStore extends StoreModule {
         if(lvl) {
           if(lvl > maxLvl) maxLvl = lvl;
           item.lvl = lvl;
-          if(isFilter) item.title = '-'.repeat(lvl) + ' ' + item.title;
+          item.title = '-'.repeat(lvl) + ' ' + item.title;
         }
       });
 

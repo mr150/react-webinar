@@ -15,7 +15,7 @@ function Main() {
     await store.catalog.initParams();
   }, [], {backForward: true});
 
-  useEffect(async () => {
+  useInit(async () => {
     await store.categories.load(true);
   }, []);
 

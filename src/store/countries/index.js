@@ -6,6 +6,7 @@ class CountriesStore extends StoreModule {
   initState() {
     return {
       items: [],
+      waiting: false,
     };
   }
 

@@ -9,18 +9,19 @@ class ArticleFormStore extends StoreModule {
     };
   }
 
+  reset() {
+    this.updateState(this.initState());
+  }
+
   async edit(form){
-    this.updateState({
-      requestResult: {},
-      waiting: true,
-    });
+    this.reset();
 
     const articleState = this.store.article.getState();
     const formData = {};
     new FormData(form).forEach((value, key) => formData[key] = value);
     formData._id = articleState.data._id;
-    formData.price = +formData.price;
-    formData.edition = +formData.edition;
+    formData.price = +formData.price || -1;
+    formData.edition = +formData.edition || -1;
     formData.maidIn = {_id: formData.maidIn};
     formData.category = {_id: formData.category};
 
