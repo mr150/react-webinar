@@ -26,6 +26,7 @@ function Article() {
 
   const callbacks = {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
+    delete: useCallback(() => store.article.deleteItem(), [store]),
   };
 
   return (
@@ -34,7 +35,7 @@ function Article() {
       <Header/>
 
       <Spinner active={select.waiting}>
-        <ArticleCard article={select.article} onAdd={callbacks.addToBasket}/>
+        <ArticleCard article={select.article} onDelete={callbacks.delete} onAdd={callbacks.addToBasket}/>
       </Spinner>
     </Layout>
   );

@@ -40,6 +40,22 @@ class ArticleStore extends StoreModule {
       });
     }
   }
+
+  async deleteItem(){
+    this.updateState({
+      waiting: true,
+    });
+
+    await fetch('/api/v1/articles/' + this.getState().data._id, {
+      method: 'delete',
+      headers: {'Content-Type': 'application/json'},
+    });
+
+    this.updateState({
+      data: {},
+      waiting: false,
+    });
+  }
 }
 
 export default ArticleStore;

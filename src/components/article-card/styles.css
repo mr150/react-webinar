@@ -25,3 +25,9 @@
 .ArticleCard-Value{
   font-weight: bold;
 }
+
+.ArticleCard-Delete {
+	margin-left: 20px;
+  color: red;
+	text-decoration: none;
+}

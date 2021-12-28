@@ -5,14 +5,14 @@ import './styles.css';
 import numberFormat from "../../utils/number-format";
 import {Link} from "react-router-dom";
 
-function ArticleCard({article, onAdd}) {
+function ArticleCard({article, onAdd, onDelete}) {
 
   // CSS классы по БЭМ
   const className = cn('ArticleCard');
 
   return (
     <div className={className()}>
-      <Link to='./edit'>Редактировать</Link>
+      <Link to='./edit'>Редактировать</Link> <Link className={className('Delete')} onClick={onDelete} to='/'>Удалить</Link>
       <div className={className('Description')}>{article.description}</div>
       <div className={className('Prop')}>
         <div className={className('Label')}>Страна производитель:</div>
@@ -41,12 +41,14 @@ function ArticleCard({article, onAdd}) {
 
 ArticleCard.propTypes = {
   article: propTypes.object.isRequired,
-  onAdd: propTypes.func
+  onAdd: propTypes.func,
+  onDelete: propTypes.func,
 }
 
 ArticleCard.defaultProps = {
   article: {},
   onAdd: () => {},
+  onDelete: () => {},
 }
 
 export default React.memo(ArticleCard);
