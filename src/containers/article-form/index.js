@@ -14,7 +14,7 @@ function ArticleForm({article, onSubmit}) {
   const className = cn('ArticleForm');
 
   const select = useSelector(state => ({
-    countries: state.articleForm.countries,
+    countries: state.countries.items,
     categories: state.categories.items,
     result: state.articleForm.requestResult,
   }));
@@ -22,6 +22,8 @@ function ArticleForm({article, onSubmit}) {
   let [category, setCategory] = useState(article.category?._id);
   let [country, setCountry] = useState(article.maidIn?._id);
 
+  // Понимаю, что разметка в контейнере - не очень. Но полагаю, что в реальном проекте,
+  // подписи к инпутам, разделители и т.д. будут в составе компонентов
   return (
     <form className={className()} onSubmit={onSubmit}>
       {select.result.success !== true && <Link to={'/articles/' + article._id}>Отмена</Link>}

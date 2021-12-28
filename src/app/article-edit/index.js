@@ -16,12 +16,12 @@ function ArticleEdit() {
   useInit(async () => {
     await store.article.load(params.id, true);
     await store.categories.load();
-    await store.articleForm.loadCountries();
+    await store.countries.load();
   }, [params.id]);
 
   const select = useSelector(state => ({
     article: state.article.data,
-    waiting: state.articleForm.waiting,
+    waiting: state.article.waiting || state.countries.waiting,
   }));
 
   const callbacks = {

@@ -10,6 +10,10 @@ class CategoriesStore extends StoreModule {
   }
 
   async load(isFilter){
+    this.updateState({
+      waiting: true,
+    });
+
     const {items} = this.getState(),
           isEmpty = !items.length;
 
@@ -74,10 +78,12 @@ class CategoriesStore extends StoreModule {
         items: items.concat(
           sorted.map(item => ({value: item._id, title: item.title}))
         ),
+        waiting: false
       });
     } else {
       this.updateState({
         items: items.slice(),
+        waiting: false
       });
     }
   }

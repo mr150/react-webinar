@@ -5,7 +5,6 @@ class ArticleFormStore extends StoreModule {
   initState() {
     return {
       requestResult: {},
-      countries: [],
       waiting: true
     };
   }
@@ -46,21 +45,6 @@ class ArticleFormStore extends StoreModule {
     }
 
     this.updateState(newState);
-  }
-
-  async loadCountries(){
-    this.updateState({
-      waiting: true,
-    });
-
-    const {result} = (await apiGet('countries', {limit: '*', fields: 'title,_id'}));
-
-    this.updateState({
-      countries: result.items
-        .map(item => ({value: item._id, title: item.title}))
-        .sort((a, b) => (a.title > b.title) ? 1 : -1),
-      waiting: false
-    });
   }
 }
 

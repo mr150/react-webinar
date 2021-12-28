@@ -104,6 +104,10 @@ class Store {
   get articleForm(){
     return this.get('articleForm');
   }
+
+  get countries(){
+    return this.get('countries');
+  }
 }
 
 export default Store;
