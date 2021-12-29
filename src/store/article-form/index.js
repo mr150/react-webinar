@@ -1,11 +1,23 @@
 import StoreModule from "../module";
 import {getFormData} from '../../utils/get-form-data';
 
+function fillRequestErrors(data) {
+  return {
+    success: false,
+    errors: data.reduce((result, item) => {
+      result[item.path] = item.message;
+      return result;
+    }, {}),
+  };
+}
+
 class ArticleFormStore extends StoreModule {
   initState() {
     return {
-      requestResult: {},
-      pageTitle: 'Новый товар',
+      requestResult: {
+        errors: {},
+      },
+      pageTitle: '',
       data: {},
       waiting: true
     };
@@ -43,17 +55,15 @@ class ArticleFormStore extends StoreModule {
     });
     const json = await response.json();
 
-    const requestResult = {success: true};
     const newState = {
       waiting: false,
       data: formData,
       pageTitle: oldTitle,
-      requestResult
+      requestResult: {success: true},
     };
 
     if(json.error !== undefined) {
-      requestResult.success = false;
-      requestResult.errors = json.error.data.issues;
+      newState.requestResult = fillRequestErrors(json.error.data.issues);
     } else {
       newState.pageTitle = formData.title;
     }
@@ -74,16 +84,14 @@ class ArticleFormStore extends StoreModule {
     });
     const json = await response.json();
 
-    const requestResult = {success: true};
     const newState = {
       waiting: false,
       data: formData,
-      requestResult
+      requestResult: {success: true},
     };
 
     if(json.error !== undefined) {
-      requestResult.success = false;
-      requestResult.errors = json.error.data.issues;
+      newState.requestResult = fillRequestErrors(json.error.data.issues);
     } else {
       newState.data = json.result;
       newState.pageTitle = formData.title;

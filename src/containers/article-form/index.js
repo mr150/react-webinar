@@ -6,6 +6,7 @@ import {cn} from '@bem-react/classname';
 import {Link} from "react-router-dom";
 import Input from "../../components/input";
 import Select from "../../components/select";
+import Field from "../../components/field";
 import './styles.css';
 
 function ArticleForm({article, onSubmit}) {
@@ -21,77 +22,50 @@ function ArticleForm({article, onSubmit}) {
 
   let [category, setCategory] = useState(article.category?._id);
   let [country, setCountry] = useState(article.maidIn?._id);
+  const {errors = {}} = select.result;
 
-  // Понимаю, что разметка в контейнере - не очень. Но полагаю, что в реальном проекте,
-  // подписи к инпутам, разделители и т.д. будут в составе компонентов
   return (
     <form className={className()} onSubmit={onSubmit}>
       {article._id && <Link to={'/articles/' + article._id}>Просмотр</Link>}
-      <p>
-        <label>
-          <span className={className('Label')}>Название</span>
-          <Input name="title" value={article.title}/>
-        </label>
-      </p>
+      <Field label="Название" message={errors["title.'ru'"]}>
+        <Input name="title" value={article.title}/>
+      </Field>
 
-      <p>
-        <label>
-          <span className={className('Label')}>Описание</span>
-          <Input tagName="textarea" theme="area" name="description" value={article.description}/>
-        </label>
-      </p>
+      <Field label="Описание" message={errors.description}>
+        <Input tagName="textarea" theme="area" name="description" value={article.description}/>
+      </Field>
 
-      <p>
-        <label>
-          <span className={className('Label')}>Страна производитель</span>
-          <Select name="maidIn" value={country} onChange={e => setCountry(e)} options={select.countries}/>
-        </label>
-      </p>
+      <Field label="Страна производитель" message={errors.maidIn}>
+        <Select name="maidIn" value={country} onChange={e => setCountry(e)} options={select.countries}/>
+      </Field>
 
-      <p>
-        <label>
-          <span className={className('Label')}>Категория</span>
-          <Select name="category" value={category} onChange={e => setCategory(e)} options={select.categories}/>
-        </label>
-      </p>
+      <Field label="Категория" message={errors.category}>
+        <Select name="category" value={category} onChange={e => setCategory(e)} options={select.categories}/>
+      </Field>
 
-      <p>
-        <label>
-          <span className={className('Label')}>Год выпуска</span>
-          <Input type="number" name="edition" value={article.edition}/>
-        </label>
-      </p>
+      <Field label="Год выпуска" message={errors.edition}>
+        <Input type="number" name="edition" value={article.edition}/>
+      </Field>
 
-      <p>
-        <label>
-          <span className={className('Label')}>Цена (₽)</span>
-          <Input type="number" name="price" value={article.price}/>
-        </label>
-      </p>
+      <Field label="Цена (₽)" message={errors.price}>
+        <Input type="number" name="price" value={article.price}/>
+      </Field>
 
       <button>Сохранить</button>
-      {
-        // Это можно было вынести в отдельный компонент, но не успел
-        select.result.success === false ?
-          (<ul>
-            {select.result.errors.map((item, i) => (
-              <li key={i}>Ошибка в поле <b>{item.path}</b>: {item.message}</li>
-            ))}
-           </ul>) :
-        (select.result.success === true) && <p>Изменения сохранены</p>
-      }
+      { // уведомление показалось слишком простым, чтобы для него делать отдельный компонент
+        (select.result.success === true) && <p>Изменения сохранены</p>}
     </form>
   );
 }
 
 ArticleForm.propTypes = {
   article: propTypes.object.isRequired,
-  onSave: propTypes.func
+  onSubmit: propTypes.func
 };
 
 ArticleForm.defaultProps = {
   article: {},
-  onSave: () => {}
+  onSubmit: () => {}
 };
 
 export default React.memo(ArticleForm);
