@@ -14,7 +14,7 @@ function ArticleEdit({creation}) {
   const params = useParams();
 
   useInit(async () => {
-    if(creation) await store.articleForm.reset(false);
+    if(creation) await store.articleForm.reset(false, 'Новый товар');
     else await store.articleForm.load(params.id);
 
     await store.categories.load();
@@ -28,12 +28,10 @@ function ArticleEdit({creation}) {
   }));
 
   const callbacks = {
-    addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
-    submit: useCallback((e) => {
-      e.preventDefault();
-      if(creation) store.articleForm.create(e.target);
-      else store.articleForm.edit(e.target);
-    }, [select.article]),
+    submit: useCallback(
+      (creation ? () => store.articleForm.create() : () => store.articleForm.edit()),
+      [select.article]
+    ),
   };
 
   return (

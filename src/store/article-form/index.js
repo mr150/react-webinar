@@ -1,5 +1,5 @@
 import StoreModule from "../module";
-import {getFormData} from '../../utils/get-form-data';
+import {convertFormData} from '../../utils/convert-form-data';
 
 function fillRequestErrors(data) {
   return {
@@ -23,8 +23,14 @@ class ArticleFormStore extends StoreModule {
     };
   }
 
-  reset(waiting = true) {
-    this.updateState({...this.initState(), waiting});
+  reset(waiting = true, pageTitle = '') {
+    this.updateState({...this.initState(), waiting, pageTitle});
+  }
+
+  setInputValue(name, value, isSelect) {
+    this.updateState({
+      data: {...this.getState().data, [name]: isSelect ? {_id: value} : value.target.value}
+    });
   }
 
   async load(id){
@@ -42,11 +48,13 @@ class ArticleFormStore extends StoreModule {
     }
   }
 
-  async edit(form){
-    const formData = getFormData(form),
+  async edit(){
+    const formData = convertFormData(this.getState().data),
           oldTitle = this.getState().pageTitle;
-    formData._id = this.getState().data._id;
-    this.reset();
+
+    this.updateState({
+      waiting: true, requestResult: {}
+    });
 
     const response = await fetch('/api/v1/articles/' + formData._id, {
       method: 'put',
@@ -57,7 +65,6 @@ class ArticleFormStore extends StoreModule {
 
     const newState = {
       waiting: false,
-      data: formData,
       pageTitle: oldTitle,
       requestResult: {success: true},
     };
@@ -65,17 +72,31 @@ class ArticleFormStore extends StoreModule {
     if(json.error !== undefined) {
       newState.requestResult = fillRequestErrors(json.error.data.issues);
     } else {
-      newState.pageTitle = formData.title;
+      newState.pageTitle = json.result.title;
     }
 
     this.updateState(newState);
   }
 
-  async create(form){
-    this.reset();
+  async create(){
+    this.updateState({
+      waiting: true,
+      requestResult: {},
+    });
 
-    const formData = getFormData(form);
+    const formData = convertFormData(this.getState().data);
     formData.name = formData.title;
+
+    // Возможно такое стоило делать при инициализации, но я торопился
+    if(formData.category === undefined) {
+      formData.category = {_id: this.store.categories.getState().items[0].value}
+    }
+
+    if(formData.country === undefined) {
+      formData.country = {_id: this.store.countries.getState().items[0].value}
+    }
+
+    if(formData._id !== undefined) delete formData._id;
 
     const response = await fetch('/api/v1/articles', {
       method: 'post',
@@ -86,7 +107,6 @@ class ArticleFormStore extends StoreModule {
 
     const newState = {
       waiting: false,
-      data: formData,
       requestResult: {success: true},
     };
 

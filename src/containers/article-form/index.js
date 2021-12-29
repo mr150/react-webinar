@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import useSelector from "../../utils/use-selector";
 import useStore from "../../utils/use-store";
 import propTypes from 'prop-types';
@@ -13,6 +13,7 @@ function ArticleForm({article, onSubmit}) {
 
   // CSS классы по БЭМ
   const className = cn('ArticleForm');
+  const store = useStore();
 
   const select = useSelector(state => ({
     countries: state.countries.items,
@@ -20,35 +21,36 @@ function ArticleForm({article, onSubmit}) {
     result: state.articleForm.requestResult,
   }));
 
-  let [category, setCategory] = useState(article.category?._id);
-  let [country, setCountry] = useState(article.maidIn?._id);
+  const onChangeHandler = useCallback((name, isSelect) => {
+    return (e) => store.articleForm.setInputValue(name, e, isSelect);
+  }, [article]);
   const {errors = {}} = select.result;
 
   return (
-    <form className={className()} onSubmit={onSubmit}>
+    <form className={className()} onSubmit={(e) => {e.preventDefault(); onSubmit();}}>
       {article._id && <Link to={'/articles/' + article._id}>Просмотр</Link>}
       <Field label="Название" message={errors["title.'ru'"]}>
-        <Input name="title" value={article.title}/>
+        <Input name="title" defaultValue={article.title} onChange={onChangeHandler('title')}/>
       </Field>
 
       <Field label="Описание" message={errors.description}>
-        <Input tagName="textarea" theme="area" name="description" value={article.description}/>
+        <Input tagName="textarea" theme="area" name="description" defaultValue={article.description} onChange={onChangeHandler('description')}/>
       </Field>
 
       <Field label="Страна производитель" message={errors.maidIn}>
-        <Select name="maidIn" value={country} onChange={e => setCountry(e)} options={select.countries}/>
+        <Select name="maidIn" value={article.maidIn?._id} options={select.countries} onChange={onChangeHandler('maidIn', true)}/>
       </Field>
 
       <Field label="Категория" message={errors.category}>
-        <Select name="category" value={category} onChange={e => setCategory(e)} options={select.categories}/>
+        <Select name="category" value={article.category?._id} onChange={onChangeHandler('category', true)} options={select.categories}/>
       </Field>
 
       <Field label="Год выпуска" message={errors.edition}>
-        <Input type="number" name="edition" value={article.edition}/>
+        <Input type="number" name="edition" onChange={onChangeHandler('edition')} defaultValue={article.edition}/>
       </Field>
 
       <Field label="Цена (₽)" message={errors.price}>
-        <Input type="number" name="price" value={article.price}/>
+        <Input type="number" name="price" onChange={onChangeHandler('price')} defaultValue={article.price}/>
       </Field>
 
       <button>Сохранить</button>

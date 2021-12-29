@@ -6,22 +6,28 @@ import throttle from "lodash.throttle";
 
 function Input(props) {
 
-  // Внутренний стейт по умолчанию с переданным value
-  const [value, change] = useState(props.value);
+  let {onChange, value} = props;
 
-  // Задержка для вызова props.onChange
-  const changeThrottle = useCallback(throttle(value => props.onChange(value), 1000), [props.onChange]);
+  if(props.single) {
+    // Внутренний стейт по умолчанию с переданным value
+    const stateAssents = useState(props.value);
+    const change = stateAssents[1];
+    value = stateAssents[0];
 
-  // Обработчик изменений в поле
-  const onChange = useCallback(event => {
-    change(event.target.value);
-    changeThrottle(event.target.value);
-  }, [change, changeThrottle]);
+    // Задержка для вызова props.onChange
+    const changeThrottle = useCallback(throttle(value => props.onChange(value), 1000), [props.onChange]);
 
-  // Обновление стейта, если передан новый value
-  useEffect(() => {
-    change(props.value);
-  }, [props.value]);
+    // Обработчик изменений в поле
+    onChange = useCallback(event => {
+      change(event.target.value);
+      changeThrottle(event.target.value);
+    }, [change, changeThrottle]);
+
+    // Обновление стейта, если передан новый value
+    useEffect(() => {
+      change(props.value);
+    }, [props.value]);
+  }
 
   // CSS классы по БЭМ
   const className = cn('Input');
@@ -37,6 +43,7 @@ function Input(props) {
     <ElmName
       className={className({theme: props.theme})}
       value={value}
+      defaultValue={props.defaultValue}
       type={inpType}
       name={props.name}
       placeholder={props.placeholder}
